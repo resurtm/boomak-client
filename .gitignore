@@ -1,4 +1,4 @@
 /.idea/
 /node_modules/
-/dist/bundle/*
-!/dist/bundle/.gitkeep
+/public/bundle/*
+!/public/bundle/.gitkeep
