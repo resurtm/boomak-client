@@ -27,7 +27,6 @@ const config = {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
           use: [
-            {loader: 'style-loader'},
             {loader: 'css-loader'},
             {
               loader: 'postcss-loader',

@@ -1,13 +1,42 @@
 <template>
-  <div class="card" style="width: 20rem;">
-    <div class="card-body">
-      <h4 class="card-title">Card title</h4>
-      <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      <a href="#" class="card-link">Card link</a>
-      <a href="#" class="card-link">Another link</a>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+
+      <router-link :to="{name: 'home'}" class="navbar-brand">Boomak</router-link>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+              aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <router-link :to="{name: 'home'}" class="nav-link">
+              Home
+              <span class="sr-only">(current)</span>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">All Bookmarks</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Users</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <router-link :to="{name: 'register'}" class="nav-link">Create Account</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link :to="{name: 'login'}" class="nav-link">Log In</router-link>
+          </li>
+        </ul>
+      </div>
+
     </div>
-  </div>
+  </nav>
 </template>
 
 <script>
