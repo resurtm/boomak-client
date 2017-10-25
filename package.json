@@ -1,0 +1,23 @@
+{
+  "name": "boomak-client",
+  "version": "0.0.1",
+  "author": "resurtm",
+  "license": "MIT",
+  "devDependencies": {
+    "axios": "^0.17.0",
+    "css-loader": "^0.28.7",
+    "exports-loader": "^0.6.4",
+    "extract-text-webpack-plugin": "^3.0.1",
+    "file-loader": "^1.1.5",
+    "imports-loader": "^0.7.1",
+    "resolve-url-loader": "^2.1.1",
+    "style-loader": "^0.19.0",
+    "url-loader": "^0.6.2",
+    "vue": "^2.5.2",
+    "vue-loader": "^13.3.0",
+    "vue-router": "^3.0.1",
+    "vue-template-compiler": "^2.5.2",
+    "vuex": "^3.0.0",
+    "webpack": "^3.8.1"
+  }
+}
