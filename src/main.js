@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 
 import 'semantic-ui-less/semantic.less'
+import './main.less'
 
 import App from './App.vue'
 import store from './store/main'
