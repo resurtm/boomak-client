@@ -22,12 +22,23 @@ const config = {
       {
         test: /\.vue$/,
         use: {loader: 'vue-loader'}
-      }
+      },
+      {
+        test: /\.less$/,
+        use: ExtractTextPlugin.extract({
+          use: [/*'style-loader', */'css-loader', 'less-loader']
+        })
+      },
     ]
   },
   plugins: [
     new ExtractTextPlugin('bundle.css')
-  ]
+  ],
+  resolve: {
+    alias: {
+      '../../theme.config$': path.join(__dirname, 'semantic-theme', 'theme.config')
+    }
+  },
 };
 
 module.exports = config;
