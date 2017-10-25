@@ -24,21 +24,45 @@ const config = {
         use: {loader: 'vue-loader'}
       },
       {
-        test: /\.less$/,
+        test: /\.scss$/,
         use: ExtractTextPlugin.extract({
-          use: [/*'style-loader', */'css-loader', 'less-loader']
+          use: [
+            {loader: 'style-loader'},
+            {loader: 'css-loader'},
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: function () {
+                  return [require('precss'), require('autoprefixer')];
+                }
+              }
+            },
+            {loader: 'sass-loader'}
+          ]
         })
-      },
+      }
     ]
   },
   plugins: [
-    new ExtractTextPlugin('bundle.css')
-  ],
-  resolve: {
-    alias: {
-      '../../theme.config$': path.join(__dirname, 'semantic-theme', 'theme.config')
-    }
-  },
+    new ExtractTextPlugin('bundle.css'),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+      Popper: ['popper.js', 'default'],
+      Alert: 'exports-loader?Alert!bootstrap/js/dist/alert',
+      Button: 'exports-loader?Button!bootstrap/js/dist/button',
+      Carousel: 'exports-loader?Carousel!bootstrap/js/dist/carousel',
+      Collapse: 'exports-loader?Collapse!bootstrap/js/dist/collapse',
+      Dropdown: 'exports-loader?Dropdown!bootstrap/js/dist/dropdown',
+      Modal: 'exports-loader?Modal!bootstrap/js/dist/modal',
+      Popover: 'exports-loader?Popover!bootstrap/js/dist/popover',
+      Scrollspy: 'exports-loader?Scrollspy!bootstrap/js/dist/scrollspy',
+      Tab: 'exports-loader?Tab!bootstrap/js/dist/tab',
+      Tooltip: "exports-loader?Tooltip!bootstrap/js/dist/tooltip",
+      Util: 'exports-loader?Util!bootstrap/js/dist/util'
+    })
+  ]
 };
 
 module.exports = config;
