@@ -8,10 +8,23 @@
 </template>
 
 <script>
+  import {mapActions} from 'vuex'
+  import {VALIDATE_AUTH} from './store/auth'
   import HeaderMenu from './layout/HeaderMenu.vue'
 
   export default {
     name: 'app',
-    components: {HeaderMenu}
+
+    components: {HeaderMenu},
+
+    mounted() {
+      this[VALIDATE_AUTH]().catch(() => {
+        this.$router.push({name: 'home'});
+      });
+    },
+
+    methods: {
+      ...mapActions([VALIDATE_AUTH])
+    }
   }
 </script>

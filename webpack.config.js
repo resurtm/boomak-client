@@ -8,6 +8,7 @@ const config = {
     path: path.join(__dirname, 'public', 'bundle'),
     filename: 'bundle.js'
   },
+  devtool: 'cheap-module-eval-source-map',
   module: {
     rules: [
       {

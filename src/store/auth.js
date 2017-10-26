@@ -1,10 +1,14 @@
 import axios from 'axios'
 import {apiURL, authTokenName} from '../settings'
 
+// getters
 export const LOGGED_IN = 'auth/LOGGED_IN';
+
+// actions
 export const LOGIN_USER = 'auth/LOGIN_USER';
 export const LOGOUT_USER = 'auth/LOGOUT_USER';
 export const REGISTER_USER = 'auth/REGISTER_USER';
+export const VALIDATE_AUTH = 'auth/VALIDATE_AUTH';
 
 const authModule = {
   namespaced: true,
@@ -16,7 +20,7 @@ const authModule = {
   getters: {
     LOGGED_IN(state) {
       return state._authTokenValue !== null;
-    }
+    },
   },
 
   mutations: {
@@ -33,10 +37,9 @@ const authModule = {
 
   actions: {
     LOGIN_USER({commit}, params) {
-      return axios.post(apiURL + 'auth', params)
-        .then(resp => {
-          commit('_setAuthTokenValue', resp.data);
-        })
+      return axios.post(apiURL + 'auth', params).then(resp => {
+        commit('_setAuthTokenValue', resp.data);
+      });
     },
 
     LOGOUT_USER({commit}, params) {
@@ -46,6 +49,15 @@ const authModule = {
 
     REGISTER_USER(context, params) {
 
+    },
+
+    VALIDATE_AUTH({getters, commit, dispatch, state}, params) {
+      if (getters.LOGGED_IN) {
+        return axios.post(apiURL + 'validate', state._authTokenValue).catch(err => {
+          dispatch('LOGOUT_USER');
+          return Promise.reject();
+        });
+      }
     }
   }
 };
