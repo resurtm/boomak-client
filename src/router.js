@@ -5,6 +5,8 @@ import Login from './pages/Login.vue'
 import Logout from './pages/Logout.vue'
 import Register from './pages/Register.vue'
 import Settings from './pages/Settings.vue'
+import AllBookmarks from './pages/AllBookmarks.vue'
+import Users from './pages/Users.vue'
 
 import {requireAuth, requireGuest} from "./helpers";
 
@@ -14,6 +16,8 @@ const routes = [
   {path: '/log-out', name: 'logout', component: Logout, beforeEnter: requireAuth(false)},
   {path: '/sign-up', name: 'register', component: Register, beforeEnter: requireGuest},
   {path: '/settings', name: 'settings', component: Settings, beforeEnter: requireAuth()},
+  {path: '/all-bookmarks', name: 'all-bookmarks', component: AllBookmarks},
+  {path: '/users', name: 'users', component: Users},
 ];
 
 const router = new VueRouter({

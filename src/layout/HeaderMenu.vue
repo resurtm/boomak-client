@@ -11,35 +11,53 @@
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
+          <li class="nav-item" :class="{'active': route == 'home'}">
             <router-link :to="{name: 'home'}" class="nav-link">
               Home
-              <span class="sr-only">(current)</span>
+              <span class="sr-only" v-if="route == 'home'">(current)</span>
             </router-link>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">All Bookmarks</a>
+          <li class="nav-item" :class="{'active': route == 'all-bookmarks'}">
+            <router-link :to="{name: 'all-bookmarks'}" class="nav-link">
+              All Bookmarks
+              <span class="sr-only" v-if="route == 'all-bookmarks'">(current)</span>
+            </router-link>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Users</a>
+          <li class="nav-item" :class="{'active': route == 'users'}">
+            <router-link :to="{name: 'users'}" class="nav-link">
+              Users
+              <span class="sr-only" v-if="route == 'users'">(current)</span>
+            </router-link>
           </li>
         </ul>
 
         <ul class="navbar-nav ml-auto" v-if="loggedIn">
-          <li class="nav-item">
-            <router-link :to="{name: 'settings'}" class="nav-link">My Settings</router-link>
+          <li class="nav-item" :class="{'active': route == 'settings'}">
+            <router-link :to="{name: 'settings'}" class="nav-link">
+              My Settings
+              <span class="sr-only" v-if="route == 'settings'">(current)</span>
+            </router-link>
           </li>
-          <li class="nav-item">
-            <router-link :to="{name: 'logout'}" class="nav-link">Logout</router-link>
+          <li class="nav-item" :class="{'active': route == 'logout'}">
+            <router-link :to="{name: 'logout'}" class="nav-link">
+              Logout
+              <span class="sr-only" v-if="route == 'logout'">(current)</span>
+            </router-link>
           </li>
         </ul>
 
         <ul class="navbar-nav ml-auto" v-if="!loggedIn">
-          <li class="nav-item">
-            <router-link :to="{name: 'register'}" class="nav-link">Create Account</router-link>
+          <li class="nav-item" :class="{'active': route == 'register'}">
+            <router-link :to="{name: 'register'}" class="nav-link">
+              Create Account
+              <span class="sr-only" v-if="route == 'register'">(current)</span>
+            </router-link>
           </li>
-          <li class="nav-item">
-            <router-link :to="{name: 'login'}" class="nav-link">Login</router-link>
+          <li class="nav-item" :class="{'active': route == 'login'}">
+            <router-link :to="{name: 'login'}" class="nav-link">
+              Login
+              <span class="sr-only" v-if="route == 'login'">(current)</span>
+            </router-link>
           </li>
         </ul>
       </div>
@@ -54,6 +72,20 @@
 
   export default {
     name: 'header-menu',
+
+    data: () => ({
+      route: ''
+    }),
+
+    mounted() {
+      this.route = this.$router.currentRoute.name;
+    },
+
+    watch: {
+      '$route'(to, from) {
+        this.route = to.name;
+      }
+    },
 
     computed: {
       ...mapGetters({loggedIn: LOGGED_IN})
