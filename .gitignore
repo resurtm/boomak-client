@@ -2,3 +2,4 @@
 /node_modules/
 /public/bundle/*
 !/public/bundle/.gitkeep
+/src/settings.js

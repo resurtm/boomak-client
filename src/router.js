@@ -6,28 +6,14 @@ import Logout from './pages/Logout.vue'
 import Register from './pages/Register.vue'
 import Settings from './pages/Settings.vue'
 
-import store from './store/main'
-import {LOGGED_IN} from './store/auth'
-
-const requireAuth = (to, from, next) => {
-  if (store.getters[LOGGED_IN]) {
-    next();
-  } else {
-    next({
-      name: 'login',
-      query: {r: to.fullPath}
-    });
-  }
-};
+import {requireAuth, requireGuest} from "./helpers";
 
 const routes = [
   {path: '/', name: 'home', component: Home},
-
-  {path: '/log-in', name: 'login', component: Login},
-  {path: '/log-out', name: 'logout', component: Logout},
-  {path: '/sign-up', name: 'register', component: Register},
-
-  {path: '/settings', name: 'settings', component: Settings, beforeEnter: requireAuth},
+  {path: '/log-in', name: 'login', component: Login, beforeEnter: requireGuest},
+  {path: '/log-out', name: 'logout', component: Logout, beforeEnter: requireAuth(false)},
+  {path: '/sign-up', name: 'register', component: Register, beforeEnter: requireGuest},
+  {path: '/settings', name: 'settings', component: Settings, beforeEnter: requireAuth()},
 ];
 
 const router = new VueRouter({
