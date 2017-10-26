@@ -3,7 +3,12 @@
     <h1>Log into Your Account</h1>
 
     <form @submit.prevent="submitForm">
-      <div class="form-group">
+      <div class="alert alert-danger my-4" role="alert" v-show="showCommonError">
+        <strong>Warning!</strong>
+        Please enter valid username and/or password
+      </div>
+
+      <div class="form-group my-4">
         <label for="login-form-username">Username</label>
         <input type="text"
                name="username"
@@ -22,12 +27,24 @@
         <div class="invalid-feedback" v-show="errors.has('username')">{{errors.first('username')}}</div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group my-4">
         <label for="login-form-password">Password</label>
-        <input type="password" class="form-control" id="login-form-password" aria-describedby="login-form-password-help"
-               placeholder="s3cr3t$str1ng">
+        <input type="password"
+               name="password"
+               class="form-control"
+               :class="{'is-invalid': errors.has('password')}"
+               id="login-form-password"
+               aria-describedby="login-form-password-help"
+               placeholder="s3cr3t$str1ng"
+               v-model="params.password"
+               v-validate="'required|min:6|max:255'"
+               data-vv-as="password"
+               data-vv-validate-on="none">
         <small id="login-form-password-help" class="form-text text-muted">Please use your password</small>
+        <div class="invalid-feedback" v-show="errors.has('password')">{{errors.first('password')}}</div>
       </div>
+
+      <hr class="my-4">
 
       <button type="submit" class="btn btn-lg btn-primary px-5">Login</button>
       <button type="button" class="btn btn-lg btn-link" @click.prevent="resetForm">Reset</button>
@@ -36,6 +53,10 @@
 </template>
 
 <script>
+  import {mapActions} from 'vuex'
+  import {pick, clone} from 'lodash'
+  import {LOGIN_USER} from '../store/auth'
+
   const defaultParams = {
     username: '',
     password: ''
@@ -45,23 +66,35 @@
     name: 'login-page',
 
     data: () => ({
-      params: defaultParams
+      params: clone(defaultParams),
+      showCommonError: false
     }),
 
     methods: {
       submitForm() {
-        this.$validator.validateAll().then(result => {
-          console.log(result);
-          if (!result) {
-            return;
-          }
-          // TODO: send the data to the server
-        });
+        this.showCommonError = false;
+        this.$validator.validateAll()
+          .then(result => {
+            return result ? true : Promise.reject();
+          })
+          .then(() => {
+            return this[LOGIN_USER](pick(this.params, ['username', 'password']));
+          })
+          .then(() => {
+            this.$router.push('r' in this.$route.query ? this.$route.query.r : {name: 'home'});
+          })
+          .catch(() => {
+            this.showCommonError = true;
+          });
       },
 
       resetForm() {
-        alert(1);
-      }
+        this.params = clone(defaultParams);
+        this.showCommonError = false;
+        this.$validator.clean();
+      },
+
+      ...mapActions([LOGIN_USER])
     }
   }
 </script>
