@@ -19,13 +19,20 @@
 
     methods: {
       pingAPI() {
-        this[PING_API]()
-          .then(() => {
-            this.status = 'success';
-          })
-          .catch(() => {
-            this.status = 'failed';
-          });
+        this.status = null;
+        setTimeout(() => {
+          this[PING_API]()
+            .then(() => {
+              setTimeout(() => {
+                this.status = 'success';
+              }, 250);
+            })
+            .catch(() => {
+              setTimeout(() => {
+                this.status = 'failed';
+              }, 250);
+            });
+        }, 250);
       },
 
       ...mapActions([PING_API]),
