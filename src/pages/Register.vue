@@ -41,7 +41,7 @@
                data-vv-as="email"
                data-vv-validate-on="none">
         <small id="login-form-email-help" class="form-text text-muted">
-          Don't worry—we will never share your email!
+          Do not worry—we will never share your email!
         </small>
         <div class="invalid-feedback" v-show="errors.has('email')">{{errors.first('email')}}</div>
       </div>

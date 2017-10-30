@@ -23,9 +23,10 @@
 
     mounted() {
       this[LOGOUT_USER]();
-      setTimeout(() => {
-        this.$router.push({name: 'home'});
-      }, timeoutWhenLogout * 1000)
+      // todo: implement something better
+//      setTimeout(() => {
+//        this.$router.push({name: 'home'});
+//      }, timeoutWhenLogout * 1000)
     },
 
     methods: {

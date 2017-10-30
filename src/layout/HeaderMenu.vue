@@ -88,7 +88,7 @@
     },
 
     computed: {
-      ...mapGetters({loggedIn: LOGGED_IN})
+      ...mapGetters({loggedIn: LOGGED_IN}),
     }
   }
 </script>
