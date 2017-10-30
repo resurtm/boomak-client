@@ -32,12 +32,12 @@ const authModule = {
         localStorage.setItem(authTokenName, authTokenValue);
         state._authTokenValue = authTokenValue;
       }
-    }
+    },
   },
 
   actions: {
     LOGIN_USER({commit}, params) {
-      return axios.post(apiURL + 'auth', params).then(resp => {
+      return axios.post(apiURL + 'login', params).then(resp => {
         commit('_setAuthTokenValue', resp.data);
       });
     },
@@ -48,18 +48,18 @@ const authModule = {
     },
 
     REGISTER_USER(context, params) {
-
+      console.log(params);
     },
 
     VALIDATE_AUTH({getters, commit, dispatch, state}, params) {
       if (getters.LOGGED_IN) {
-        return axios.post(apiURL + 'validate', state._authTokenValue).catch(err => {
+        return axios.post(apiURL + 'check', state._authTokenValue).catch(err => {
           dispatch('LOGOUT_USER');
           return Promise.reject();
         });
       }
-    }
-  }
+    },
+  },
 };
 
 export default authModule

@@ -22,7 +22,7 @@
                data-vv-as="username"
                data-vv-validate-on="none">
         <small id="login-form-username-help" class="form-text text-muted">
-          Enter username which you've used when you created your account.
+          Enter username which you've used when you created your account
         </small>
         <div class="invalid-feedback" v-show="errors.has('username')">{{errors.first('username')}}</div>
       </div>
@@ -59,7 +59,7 @@
 
   const defaultParams = {
     username: '',
-    password: ''
+    password: '',
   };
 
   export default {
@@ -67,7 +67,7 @@
 
     data: () => ({
       params: clone(defaultParams),
-      showCommonError: false
+      showCommonError: false,
     }),
 
     methods: {
@@ -94,7 +94,7 @@
         this.$validator.clean();
       },
 
-      ...mapActions([LOGIN_USER])
-    }
+      ...mapActions([LOGIN_USER]),
+    },
   }
 </script>
