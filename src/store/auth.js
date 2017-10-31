@@ -15,6 +15,7 @@ export const LOGOUT_USER = 'auth/LOGOUT_USER';
 export const REGISTER_USER = 'auth/REGISTER_USER';
 export const VALIDATE_AUTH = 'auth/VALIDATE_AUTH';
 export const UPDATE_SETTINGS = 'auth/UPDATE_SETTINGS';
+export const VERIFY_EMAIL = 'auth/VERIFY_EMAIL';
 
 const authModule = {
   namespaced: true,
@@ -66,6 +67,7 @@ const authModule = {
       return axios.post(apiURL + 'login', params).then(resp => {
         commit('_setAuthTokenValue', resp.data);
         dispatch('UPDATE_SETTINGS');
+        return Promise.resolve();
       });
     },
 
@@ -79,20 +81,31 @@ const authModule = {
     },
 
     VALIDATE_AUTH({getters, dispatch, state}, params) {
-      if (getters.LOGGED_IN) {
-        return axios.post(apiURL + 'check', state._authTokenValue).catch(err => {
-          dispatch('LOGOUT_USER');
-          return Promise.reject();
-        });
+      if (!getters.LOGGED_IN) {
+        return Promise.reject();
       }
+      return axios.post(apiURL + 'check', state._authTokenValue).catch(err => {
+        dispatch('LOGOUT_USER');
+        return Promise.reject();
+      });
     },
 
-    UPDATE_SETTINGS({commit}) {
+    UPDATE_SETTINGS({getters, commit}) {
+      if (!getters.LOGGED_IN) {
+        return Promise.reject();
+      }
       return axios.get(apiURL + 'get-settings').then(resp => {
         commit('CHANGE_SETTINGS', resp.data);
         return resp.data;
       });
     },
+
+    VERIFY_EMAIL({dispatch}, verificationKey) {
+      return axios.post(apiURL + 'verify-email', verificationKey).then(resp => {
+        dispatch('UPDATE_SETTINGS');
+        return Promise.resolve();
+      });
+    }
   },
 };
 

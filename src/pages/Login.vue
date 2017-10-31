@@ -75,7 +75,7 @@
         this.showCommonError = false;
         this.$validator.validateAll()
           .then(result => {
-            return result ? true : Promise.reject();
+            return result ? Promise.resolve() : Promise.reject();
           })
           .then(() => {
             return this[LOGIN_USER](pick(this.params, ['username', 'password']));

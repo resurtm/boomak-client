@@ -15,9 +15,8 @@
         </li>
       </ul>
     </div>
-    <div class="col-md-9 mb-4">
-      <router-view></router-view>
-    </div>
+
+    <router-view></router-view>
   </div>
 </template>
 
