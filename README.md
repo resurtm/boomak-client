@@ -8,6 +8,15 @@ Simple REST API based bookmarks storage and management web application. Don't
 expect something big or unique here—just another Pet Project to practice my
 skills in programming and web development. :-)
 
+Repositories Structure
+----------------------
+
+Repository | URL | Comment | Language
+--- | --- | --- | ---
+boomak-server | [https://github.com/resurtm/boomak-server](https://github.com/resurtm/boomak-server) | Server backend | Go
+boomak-client _**(this repo!)**_| [https://github.com/resurtm/boomak-client](https://github.com/resurtm/boomak-client) | Web based client | JavaScript
+boomak-cli | [https://github.com/resurtm/boomak-cli](https://github.com/resurtm/boomak-cli) | CLI based client | Go
+
 Launching this Project
 ----------------------
 
@@ -39,15 +48,6 @@ Here you can do the actual work (use git, yarn, edit some files, etc.)
 ### Production Environment
 
 TBD:
-
-Repositories Structure
-----------------------
-
-Repository | URL | Comment | Language
---- | --- | --- | ---
-boomak-server | [https://github.com/resurtm/boomak-server](https://github.com/resurtm/boomak-server) | Server backend | Go
-boomak-client _**(this repo!)**_| [https://github.com/resurtm/boomak-client](https://github.com/resurtm/boomak-client) | Web based client | JavaScript
-boomak-cli | [https://github.com/resurtm/boomak-cli](https://github.com/resurtm/boomak-cli) | CLI based client | Go
 
 License
 -------
