@@ -2,7 +2,8 @@
   <div id="app">
     <header-menu></header-menu>
 
-    <div class="container pt-5">
+    <div class="container my-4">
+      <check-email-verification></check-email-verification>
       <router-view></router-view>
     </div>
 
@@ -13,29 +14,29 @@
 <script>
   import axios from 'axios'
   import {mapActions, mapGetters} from 'vuex'
-  import {VALIDATE_AUTH, AUTH_TOKEN} from './store/auth'
+  import {VALIDATE_AUTH, AUTH_TOKEN, UPDATE_SETTINGS} from './store/auth'
   import HeaderMenu from './layout/HeaderMenu.vue'
-  import PingApiButton from './partials/PingAPIButton.vue'
+  import PingApiButton from './layout/PingAPIButton.vue'
+  import CheckEmailVerification from './layout/CheckEmailVerification.vue'
   import {refreshAxiosHeaders} from './helpers'
 
   export default {
     name: 'app',
 
     components: {
+      CheckEmailVerification,
       HeaderMenu,
       PingApiButton,
     },
 
     mounted() {
-      this[VALIDATE_AUTH]().catch(() => {
-        this.$router.push({name: 'home'});
-      });
-
-      Object.assign(axios.defaults, {
-        headers: {
-          Authorization: 'bearer ' + this[AUTH_TOKEN],
-        },
-      });
+      this[VALIDATE_AUTH]()
+        .then(() => {
+          this[UPDATE_SETTINGS]();
+        })
+        .catch(() => {
+          this.$router.push({name: 'home'});
+        });
     },
 
     computed: {
@@ -43,7 +44,7 @@
     },
 
     methods: {
-      ...mapActions([VALIDATE_AUTH]),
+      ...mapActions([VALIDATE_AUTH, UPDATE_SETTINGS]),
     },
   }
 </script>

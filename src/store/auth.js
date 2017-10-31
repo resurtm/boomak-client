@@ -4,18 +4,24 @@ import {apiURL, authTokenName} from '../settings'
 // getters
 export const LOGGED_IN = 'auth/LOGGED_IN';
 export const AUTH_TOKEN = 'auth/AUTH_TOKEN';
+export const SETTINGS = 'auth/SETTINGS';
+
+// mutations
+export const CHANGE_SETTINGS = 'auth/CHANGE_SETTINGS';
 
 // actions
 export const LOGIN_USER = 'auth/LOGIN_USER';
 export const LOGOUT_USER = 'auth/LOGOUT_USER';
 export const REGISTER_USER = 'auth/REGISTER_USER';
 export const VALIDATE_AUTH = 'auth/VALIDATE_AUTH';
+export const UPDATE_SETTINGS = 'auth/UPDATE_SETTINGS';
 
 const authModule = {
   namespaced: true,
 
   state: {
-    _authTokenValue: localStorage.getItem(authTokenName),
+    _authTokenValue: localStorage.getItem(authTokenName), // only for internal use
+    settings: {},
   },
 
   getters: {
@@ -26,9 +32,14 @@ const authModule = {
     AUTH_TOKEN(state) {
       return state._authTokenValue === null ? false : state._authTokenValue;
     },
+
+    SETTINGS(state) {
+      return state.settings;
+    },
   },
 
   mutations: {
+    // only for internal use
     _setAuthTokenValue(state, authTokenValue) {
       if (authTokenValue === false) {
         localStorage.removeItem(authTokenName);
@@ -44,31 +55,43 @@ const authModule = {
         },
       });
     },
+
+    CHANGE_SETTINGS(state, settings) {
+      state.settings = settings;
+    },
   },
 
   actions: {
-    LOGIN_USER({commit}, params) {
+    LOGIN_USER({commit, dispatch}, params) {
       return axios.post(apiURL + 'login', params).then(resp => {
         commit('_setAuthTokenValue', resp.data);
+        dispatch('UPDATE_SETTINGS');
       });
     },
 
     LOGOUT_USER({commit}, params) {
-      localStorage.removeItem(authTokenName);
       commit('_setAuthTokenValue', false);
+      commit('CHANGE_SETTINGS', {});
     },
 
     REGISTER_USER(context, params) {
       return axios.post(apiURL + 'register', params);
     },
 
-    VALIDATE_AUTH({getters, commit, dispatch, state}, params) {
+    VALIDATE_AUTH({getters, dispatch, state}, params) {
       if (getters.LOGGED_IN) {
         return axios.post(apiURL + 'check', state._authTokenValue).catch(err => {
           dispatch('LOGOUT_USER');
           return Promise.reject();
         });
       }
+    },
+
+    UPDATE_SETTINGS({commit}) {
+      return axios.get(apiURL + 'get-settings').then(resp => {
+        commit('CHANGE_SETTINGS', resp.data);
+        return resp.data;
+      });
     },
   },
 };
