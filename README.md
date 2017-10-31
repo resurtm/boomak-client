@@ -1,19 +1,26 @@
-Boomak — Client Application
-===========================
+Boomak — Web Based Application
+==============================
 
 What is This?
 -------------
 
-Simple REST API based bookmarks storage and management application. Don't expect
-something big or unique here—just another Pet Project to practice my skills in
-programming and web development. :-)
+Simple REST API based bookmarks storage and management web application. Don't
+expect something big or unique here—just another Pet Project to practice my
+skills in programming and web development. :-)
 
 Launching this Project
 ----------------------
 
 ### Development Environment
 
-We assume that `%PROJECT_DIR%` is where your project located.
+We assume that `%PROJECT_DIR%` is where your project located. First of all
+you have to download everything you need to launch it:
+
+1. `cd %PROJECT_DIR%`  
+2. `git clone git@github.com:resurtm/boomak-client.git`  
+3. `yarn install`  
+
+Now we can run the project:
 
 1. Open new terminal, and run:  
 `cd %PROJECT_DIR`  
