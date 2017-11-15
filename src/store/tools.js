@@ -8,12 +8,12 @@ const toolsModule = {
   namespaced: true,
 
   actions: {
-    PING_API(context) {
+    PING_API(context, mode) {
       if (!enableAPIPing) {
         return Promise.reject();
       }
       const params = {'payload': Math.round(Math.random() * 999999)};
-      return axios.post(apiURL + 'test-action', params).then(resp => {
+      return axios.post(apiURL + 'test-' + mode, params).then(resp => {
         return resp.data.payload === params.payload ? Promise.resolve() : Promise.reject();
       });
     },

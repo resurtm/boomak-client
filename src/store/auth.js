@@ -84,7 +84,7 @@ const authModule = {
       if (!getters.LOGGED_IN) {
         return Promise.reject();
       }
-      return axios.post(apiURL + 'check', state._authTokenValue).catch(err => {
+      return axios.get(apiURL + 'check', {params: {token: state._authTokenValue}}).catch(err => {
         dispatch('LOGOUT_USER');
         return Promise.reject();
       });
@@ -94,7 +94,7 @@ const authModule = {
       if (!getters.LOGGED_IN) {
         return Promise.reject();
       }
-      return axios.get(apiURL + 'get-settings').then(resp => {
+      return axios.get(apiURL + 'settings').then(resp => {
         commit('CHANGE_SETTINGS', resp.data);
         return resp.data;
       });

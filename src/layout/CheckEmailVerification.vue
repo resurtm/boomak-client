@@ -11,13 +11,17 @@
 <script>
   import {mapGetters} from 'vuex'
   import {SETTINGS, LOGGED_IN} from '../store/auth'
+  import camelCaseKeys from 'camelcase-keys'
 
   export default {
     name: 'check-email-verification',
 
     computed: {
+      settings() {
+        return camelCaseKeys(this.rawSettings);
+      },
       ...mapGetters({
-        settings: SETTINGS,
+        rawSettings: SETTINGS,
         loggedIn: LOGGED_IN,
       }),
     },

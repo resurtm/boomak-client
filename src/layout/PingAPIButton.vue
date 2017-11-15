@@ -1,6 +1,7 @@
 <template>
   <div id="ping-api-button">
-    <button type="button" class="btn btn-primary" @click="pingAPI">Ping API</button>
+    <button type="button" class="btn btn-primary" @click="pingAPI('auth')">Ping Auth</button>
+    <button type="button" class="btn btn-primary btn-guest" @click="pingAPI('guest')">Ping Guest</button>
     <p class="failed" v-show="status === 'failed'">Failed!</p>
     <p class="success" v-show="status === 'success'">Success!</p>
   </div>
@@ -18,21 +19,13 @@
     }),
 
     methods: {
-      pingAPI() {
+      pingAPI(mode) {
         this.status = null;
-        setTimeout(() => {
-          this[PING_API]()
-            .then(() => {
-              setTimeout(() => {
-                this.status = 'success';
-              }, 250);
-            })
-            .catch(() => {
-              setTimeout(() => {
-                this.status = 'failed';
-              }, 250);
-            });
-        }, 250);
+        this[PING_API](mode).then(() => {
+          this.status = 'success';
+        }).catch(() => {
+          this.status = 'failed';
+        });
       },
 
       ...mapActions([PING_API]),
@@ -46,7 +39,7 @@
     right: 0;
     top: 250px;
     width: 150px;
-    height: 100px;
+    height: 155px;
     background: lightgray;
     border: 1px solid darkgray;
     border-right: 0;
@@ -59,6 +52,9 @@
       margin-left: -55px;
       top: 10px;
       font-weight: bold;
+      &.btn-guest {
+        top: (45px + 10px + 10px);
+      }
     }
 
     p {

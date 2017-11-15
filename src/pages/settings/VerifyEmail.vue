@@ -40,6 +40,7 @@
 <script>
   import {mapActions, mapGetters} from 'vuex'
   import {VERIFY_EMAIL, SETTINGS} from '../../store/auth'
+  import camelCaseKeys from 'camelcase-keys'
 
   export default {
     name: 'settings-email-verification-page',
@@ -50,7 +51,10 @@
     }),
 
     computed: {
-      ...mapGetters({settings: SETTINGS}),
+      settings() {
+        return camelCaseKeys(this.rawSettings);
+      },
+      ...mapGetters({rawSettings: SETTINGS}),
     },
 
     methods: {
