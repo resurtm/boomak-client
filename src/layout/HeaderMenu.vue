@@ -17,6 +17,12 @@
               <span class="sr-only" v-if="route == 'home'">(current)</span>
             </router-link>
           </li>
+          <li class="nav-item" :class="{'active': route == 'my-bookmarks'}">
+            <router-link :to="{name: 'my-bookmarks'}" class="nav-link">
+              My Bookmarks
+              <span class="sr-only" v-if="route == 'my-bookmarks'">(current)</span>
+            </router-link>
+          </li>
           <li class="nav-item" :class="{'active': route == 'all-bookmarks'}">
             <router-link :to="{name: 'all-bookmarks'}" class="nav-link">
               All Bookmarks

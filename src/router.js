@@ -7,6 +7,7 @@ import Register from './pages/Register.vue'
 import SettingsBase from './pages/settings/Base.vue'
 import SettingsHome from './pages/settings/Home.vue'
 import SettingsEmailVerification from './pages/settings/VerifyEmail.vue'
+import MyBookmarks from './pages/MyBookmarks.vue'
 import AllBookmarks from './pages/AllBookmarks.vue'
 import Users from './pages/Users.vue'
 
@@ -21,6 +22,7 @@ const routes = [
     {path: '', name: 'settings', component: SettingsHome},
     {path: 'email', name: 'email-verification', component: SettingsEmailVerification},
   ]},
+  {path: '/my-bookmarks', name: 'my-bookmarks', component: MyBookmarks, beforeEnter: requireAuth()},
   {path: '/all-bookmarks', name: 'all-bookmarks', component: AllBookmarks},
   {path: '/users', name: 'users', component: Users},
 ];

@@ -6,10 +6,9 @@ export const requireAuth = (useLogin = true) => {
     if (store.getters[LOGGED_IN]) {
       next();
     } else {
-      next(useLogin ? {
-        name: 'login',
-        query: {r: to.fullPath}
-      } : {name: 'home'});
+      next(useLogin
+        ? {name: 'login', query: {r: to.fullPath}}
+        : {name: 'home'});
     }
   };
 };
